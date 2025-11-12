@@ -1,44 +1,97 @@
+:root{
+    --calculator-width: 360px; /* preferred desktop width */
+    --gap: 10px;
+    --button-radius: 8px;
+}
+
 .container{
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px; /* allow some breathing room on small screens */
+    box-sizing: border-box;
 }
 
 .calculator{
-    height: 45vh;
-    width: 20%;
+    width: var(--calculator-width);
+    max-width: 95%; /* prevents overflow on small screens */
     background-color: lightblue;
-    padding: 10px;
+    padding: 14px;
     border-radius: 10px;
+    box-sizing: border-box;
+    /* let height grow based on content for small screens */
 }
 
 #input{
-    width: 95%;
-    height: 50px;
+    width: 100%;
+    min-height: 48px;
     background-color: white;
     border: none;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 1.2rem;
+    box-sizing: border-box;
 }
 
 .keys{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
+    gap: var(--gap);
     padding: 5px;
     border: none;
 }
 
 button{
-    font-size: 1.2rem;
-    border-radius: 5px;
+    font-size: 1.1rem;
+    border-radius: var(--button-radius);
     border: none;
-    height: 2rem;
+    padding: 12px 0;
+    background: #ffffffcc;
+    cursor: pointer;
+    /* make buttons roughly square while remaining fluid */
+    aspect-ratio: 1 / 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
 }
 
-#btn:hover{
+button:hover{
     background: rgb(151, 148, 148);
+}
+
+/* Larger screens: keep a compact look */
+@media (min-width: 1000px){
+    .calculator{ 
+        width: 20%; /* preserves original intent on very large screens */
+        min-width: 300px;
+    }
+}
+
+/* Mobile and small tablets: increase tappable size and spacing */
+@media (max-width: 600px){
+    :root{ --gap: 8px; }
+    .calculator{
+        padding: 12px;
+    }
+    #input{
+        min-height: 56px;
+        font-size: 1.4rem;
+    }
+    button{
+        font-size: 1.3rem;
+        padding: 14px 0;
+        aspect-ratio: 1 / 1; /* keep square-ish buttons */
+    }
+}
+
+/* Very small phones: slightly larger inputs and reduced gaps */
+@media (max-width: 380px){
+    :root{ --gap: 6px; }
+    .keys{ gap: var(--gap); }
+    #input{ font-size: 1.5rem; }
+    button{ font-size: 1.35rem; }
 }
